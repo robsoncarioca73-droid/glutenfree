@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto Glúten Free — Guia Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-escuro: #2D6A4F;
+    --verde-medio: #40916C;
+    --verde-claro: #74C69D;
+    --verde-palido: #D8F3DC;
+    --marrom: #C9A96E;
+    --dourado: #E9C46A;
+    --creme: #FDFAF5;
+    --escuro: #1B4332;
+    --cinza: #4A5568;
+    --cinza-claro: #F7F7F5;
+    --branco: #FFFFFF;
+    --vermelho: #E63946;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--creme);
+    color: var(--cinza);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(160deg, var(--escuro) 0%, var(--verde-escuro) 55%, var(--verde-medio) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px 60px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(116,198,157,0.10);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(201,169,110,0.08);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(233,196,106,0.18);
+    border: 1px solid var(--dourado);
+    color: var(--dourado);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    color: var(--branco);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+
+  .hero h1 span {
+    color: var(--verde-claro);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    font-weight: 300;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+
+  .hero-bullets {
+    list-style: none;
+    margin-bottom: 36px;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+  .hero-bullets li {
+    color: var(--verde-palido);
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hero-bullets li::before {
+    content: '✓';
+    color: var(--dourado);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .hero-cta {
+    animation: fadeUp 0.7s ease 0.4s both;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--dourado), var(--marrom));
+    color: var(--escuro);
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 18px 44px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 30px rgba(233,196,106,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(233,196,106,0.50);
+  }
+
+  .preco-hero {
+    margin-top: 16px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+  }
+  .preco-hero strong {
+    color: var(--dourado);
+    font-size: 1.3rem;
+  }
+
+  /* Mockup do ebook */
+  .hero-book {
+    animation: fadeUp 0.8s ease 0.3s both;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .book-mockup {
+    position: relative;
+    width: 280px;
+  }
+  .book-cover {
+    background: linear-gradient(160deg, var(--verde-medio), var(--escuro));
+    border-radius: 8px 16px 16px 8px;
+    padding: 40px 32px;
+    box-shadow: -8px 8px 0 rgba(0,0,0,0.3), 20px 30px 60px rgba(0,0,0,0.4);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 8px; height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.3), transparent);
+    border-radius: 8px 0 0 8px;
+  }
+  .book-cover-icon { font-size: 3rem; margin-bottom: 12px; opacity: 0.7; }
+  .book-cover-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--verde-palido);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .book-cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--branco);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .book-cover-divider {
+    width: 60px; height: 2px;
+    background: var(--marrom);
+    margin: 0 auto 14px;
+    border-radius: 2px;
+  }
+  .book-cover-sub {
+    font-size: 0.7rem;
+    color: var(--verde-palido);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .book-badges {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .book-badge {
+    background: var(--verde-medio);
+    color: var(--branco);
+    font-size: 7px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+  }
+  .book-cover-footer {
+    font-size: 7px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* ── STRIP NUMBERS ──────────────────────────────────────────── */
+  .strip-numbers {
+    background: var(--verde-escuro);
+    padding: 28px 24px;
+  }
+  .strip-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .strip-item {
+    text-align: center;
+  }
+  .strip-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--dourado);
+    display: block;
+    line-height: 1;
+  }
+  .strip-label {
+    font-size: 0.78rem;
+    color: var(--verde-palido);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .strip-sep {
+    width: 1px; height: 50px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ── SEÇÕES GERAIS ──────────────────────────────────────────── */
+  section { padding: 80px 24px; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--verde-medio);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--escuro);
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  h2 em { color: var(--verde-medio); font-style: italic; }
+
+  .section-intro {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 640px;
+    color: var(--cinza);
+    font-weight: 300;
+  }
+
+  /* ── DOR ────────────────────────────────────────────────────── */
+  .dor-section {
+    background: var(--creme);
+  }
+  .dor-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .dor-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .dor-card {
+    background: var(--branco);
+    border-left: 4px solid var(--vermelho);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .dor-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--cinza);
+  }
+  .dor-card p strong { color: var(--escuro); }
+
+  /* ── CAPÍTULOS ──────────────────────────────────────────────── */
+  .capitulos-section {
+    background: var(--cinza-claro);
+  }
+  .capitulos-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .capitulos-inner > p {
+    font-size: 1rem;
+    color: var(--cinza);
+    margin-bottom: 40px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .caps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .cap-card {
+    background: var(--branco);
+    border-radius: 12px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cap-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(45,106,79,0.12);
+  }
+  .cap-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--verde-claro);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+  }
+  .cap-info h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--escuro);
+    margin-bottom: 5px;
+  }
+  .cap-info p {
+    font-size: 0.82rem;
+    color: var(--cinza);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ── PARA QUEM É ──────────────────────────────────────────── */
+  .paraquem-section {
+    background: var(--branco);
+  }
+  .paraquem-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .paraquem-list {
+    list-style: none;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .paraquem-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--cinza);
+  }
+  .paraquem-list li .icon {
+    width: 30px; height: 30px;
+    background: var(--verde-palido);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* ── DEPOIMENTOS ──────────────────────────────────────────── */
+  .depo-section {
+    background: linear-gradient(160deg, var(--escuro), var(--verde-escuro));
+    padding: 80px 24px;
+  }
+  .depo-section h2 { color: var(--branco); }
+  .depo-section .section-label { color: var(--dourado); }
+  .depo-inner {
+    max-width: 1000px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .depo-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 28px 24px;
+    backdrop-filter: blur(10px);
+  }
+  .depo-stars { color: var(--dourado); font-size: 1rem; margin-bottom: 14px; }
+  .depo-text {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+    margin-bottom: 18px;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .depo-author {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--verde-claro);
+  }
+  .depo-author span {
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    margin-left: 6px;
+  }
+
+  /* ── OFERTA ─────────────────────────────────────────────────── */
+  .oferta-section {
+    background: var(--creme);
+  }
+  .oferta-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .oferta-box {
+    background: var(--branco);
+    border-radius: 20px;
+    padding: 50px 48px;
+    box-shadow: 0 20px 60px rgba(45,106,79,0.12);
+    border: 2px solid var(--verde-palido);
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .oferta-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--verde-medio), var(--dourado));
+  }
+  .oferta-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--escuro);
+    margin-bottom: 8px;
+  }
+  .oferta-preco-de {
+    font-size: 0.9rem;
+    color: var(--cinza);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  .oferta-preco {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--verde-escuro);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .oferta-preco sup { font-size: 1.4rem; vertical-align: super; }
+  .oferta-parcelas {
+    font-size: 0.85rem;
+    color: var(--cinza);
+    margin-bottom: 30px;
+  }
+  .oferta-inclusos {
+    list-style: none;
+    margin-bottom: 32px;
+    text-align: left;
+    display: inline-block;
+  }
+  .oferta-inclusos li {
+    font-size: 0.92rem;
+    color: var(--cinza);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .oferta-inclusos li::before {
+    content: '✓';
+    color: var(--verde-medio);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .btn-comprar {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--verde-medio), var(--verde-escuro));
+    color: var(--branco);
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 20px 60px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 30px rgba(64,145,108,0.40);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+  .btn-comprar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(64,145,108,0.55);
+  }
+  .garantia {
+    margin-top: 20px;
+    font-size: 0.82rem;
+    color: var(--cinza);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .garantia::before { content: '🔒'; }
+
+  /* ── FAQ ──────────────────────────────────────────────────── */
+  .faq-section { background: var(--cinza-claro); }
+  .faq-inner {
+    max-width: 760px;
+    margin: 40px auto 0;
+  }
+  .faq-item {
+    background: var(--branco);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .faq-q {
+    padding: 20px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--escuro);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .faq-q::after { content: '+'; font-size: 1.3rem; color: var(--verde-medio); transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a {
+    display: none;
+    padding: 0 24px 20px;
+    font-size: 0.9rem;
+    color: var(--cinza);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    background: var(--escuro);
+    padding: 40px 24px;
+    text-align: center;
+  }
+  footer p {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+  footer strong { color: var(--verde-claro); }
+
+  /* ── STICKY CTA ─────────────────────────────────────────── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--verde-escuro);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta p { color: var(--verde-palido); font-size: 0.9rem; }
+  .sticky-cta p strong { color: var(--dourado); }
+  .sticky-cta a {
+    background: linear-gradient(135deg, var(--dourado), var(--marrom));
+    color: var(--escuro);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s;
+  }
+  .sticky-cta a:hover { transform: scale(1.04); }
+
+  /* ── ANIMAÇÕES ──────────────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVO ─────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; text-align: center; }
+    .hero-book { order: -1; }
+    .book-mockup { width: 200px; }
+    .book-cover { padding: 28px 22px; }
+    .book-cover-title { font-size: 1.2rem; }
+    .hero-bullets { text-align: left; }
+    .strip-sep { display: none; }
+    .dor-inner, .paraquem-inner { grid-template-columns: 1fr; gap: 40px; }
+    .oferta-box { padding: 36px 24px; }
+    .sticky-cta { flex-direction: column; gap: 10px; padding: 16px; }
+    section { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">🌾 Novo — Lançamento 2026</div>
+      <h1>Descubra o que o <span>Glúten</span> está fazendo ao seu corpo</h1>
+      <p class="hero-sub">O guia completo que explica — em linguagem simples e baseado em ciência — tudo sobre intolerância, diagnóstico e como viver bem sem glúten.</p>
+      <ul class="hero-bullets">
+        <li>Baseado em 13 fontes científicas e diretrizes do Ministério da Saúde</li>
+        <li>10 capítulos completos + receitas práticas e cardápio semanal</li>
+        <li>Do diagnóstico correto à alimentação segura no dia a dia</li>
+        <li>Linguagem acessível — sem jargões, sem complicações</li>
+      </ul>
+      <div class="hero-cta">
+        <a href="#oferta" class="btn-cta">Quero o Guia Completo →</a>
+        <p class="preco-hero">Por apenas <strong>R$ 37,00</strong> — acesso imediato</p>
+      </div>
+    </div>
+    <div class="hero-book">
+      <div class="book-mockup">
+        <div class="book-cover">
+          <div class="book-cover-icon">🌾</div>
+          <div class="book-cover-label">Projeto</div>
+          <div class="book-cover-title">GLÚTEN FREE</div>
+          <div class="book-cover-divider"></div>
+          <div class="book-cover-sub">Guia Completo sobre Glúten,<br>Intolerância e Saúde Intestinal</div>
+          <div class="book-badges">
+            <span class="book-badge">13 Fontes</span>
+            <span class="book-badge">10 Capítulos</span>
+            <span class="book-badge">Receitas</span>
+          </div>
+          <div class="book-cover-footer">PROJETO GLÚTEN FREE • 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NÚMEROS -->
+<div class="strip-numbers">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <span class="strip-num">32</span>
+      <div class="strip-label">páginas de conteúdo</div>
+    </div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">
+      <span class="strip-num">10</span>
+      <div class="strip-label">capítulos completos</div>
+    </div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">
+      <span class="strip-num">13</span>
+      <div class="strip-label">fontes científicas</div>
+    </div>
+    <div class="strip-sep"></div>
+    <div class="strip-item">
+      <span class="strip-num">2M+</span>
+      <div class="strip-label">celíacos não diagnosticados no Brasil</div>
+    </div>
+  </div>
+</div>
+
+<!-- DOR -->
+<section class="dor-section">
+  <div class="dor-inner">
+    <div class="reveal">
+      <div class="section-label">Você se identifica?</div>
+      <h2>Sintomas sem explicação há <em>anos?</em></h2>
+      <p class="section-intro" style="margin-top:16px">Minha esposa viveu 35 anos com sintomas que ninguém conseguia explicar. Náuseas, alergias, cansaço extremo. O diagnóstico mudou tudo. E se o glúten for a causa que ninguém investigou?</p>
+    </div>
+    <div class="dor-cards reveal">
+      <div class="dor-card"><p>Você sente <strong>fadiga constante</strong> mesmo dormindo bem?</p></div>
+      <div class="dor-card"><p>Sofre com <strong>distensão abdominal</strong> após as refeições?</p></div>
+      <div class="dor-card"><p>Tem <strong>névoa mental</strong> — dificuldade de se concentrar?</p></div>
+      <div class="dor-card"><p>Sua <strong>anemia não melhora</strong> mesmo com suplementação?</p></div>
+      <div class="dor-card"><p>Tem <strong>dores articulares ou enxaquecas</strong> frequentes sem causa?</p></div>
+      <div class="dor-card"><p>Apresentou <strong>alergias de pele</strong> sem alérgeno identificado?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPÍTULOS -->
+<section class="capitulos-section">
+  <div class="capitulos-inner">
+    <div class="reveal">
+      <div class="section-label">O que você vai aprender</div>
+      <h2>10 capítulos para <em>transformar</em> sua relação com a saúde</h2>
+    </div>
+    <p class="reveal" style="margin-top:16px; max-width:640px; font-weight:300; line-height:1.7">Cada capítulo foi escrito com uma missão: dar a você a informação certa, na hora certa, de forma que você consiga usar no dia a dia.</p>
+    <div class="caps-grid" style="margin-top:32px">
+      <div class="cap-card reveal">
+        <div class="cap-num">1</div>
+        <div class="cap-info"><h3>O que é o Glúten</h3><p>Origem, composição, como ele age no organismo e por que causa problemas em algumas pessoas.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">2</div>
+        <div class="cap-info"><h3>Os Sintomas Ocultos</h3><p>Os sinais que ninguém associa ao glúten — neurológicos, cutâneos, hormonais e emocionais.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">3</div>
+        <div class="cap-info"><h3>Três Condições</h3><p>Celíaca, sensibilidade e alergia ao trigo — diferenças cruciais para o diagnóstico correto.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">4</div>
+        <div class="cap-info"><h3>Exames e Diagnóstico</h3><p>Quais exames pedir, como interpretar, por que nunca retirar o glúten antes dos testes.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">5</div>
+        <div class="cap-info"><h3>Intestino e Imunidade</h3><p>O mecanismo da zonulina, microbiota, eixo intestino-cérebro e doenças autoimunes associadas.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">6</div>
+        <div class="cap-info"><h3>Onde o Glúten se Esconde</h3><p>Lista completa de alimentos suspeitos, como ler rótulos e evitar a contaminação cruzada.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">7</div>
+        <div class="cap-info"><h3>A Dieta Sem Glúten</h3><p>Benefícios reais, substituições inteligentes e deficiências nutricionais a monitorar.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">8</div>
+        <div class="cap-info"><h3>Receitas e Cardápios</h3><p>4 receitas práticas + cardápio semanal completo, do café da manhã ao jantar.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">9</div>
+        <div class="cap-info"><h3>Crianças e o Glúten</h3><p>Sintomas específicos em bebês, quando introduzir o glúten e como lidar com a escola.</p></div>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-num">10</div>
+        <div class="cap-info"><h3>Vida com Qualidade</h3><p>Como viver bem em restaurantes, viagens, festas e no dia a dia sem abrir mão de nada.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="paraquem-section">
+  <div class="paraquem-inner">
+    <div class="reveal">
+      <div class="section-label">Este guia é para você se...</div>
+      <h2>Você merece <em>respostas</em> claras</h2>
+      <ul class="paraquem-list">
+        <li><span class="icon">🔍</span>Tem sintomas há anos e não encontrou a causa</li>
+        <li><span class="icon">🩺</span>Suspeita de intolerância mas não sabe por onde começar</li>
+        <li><span class="icon">✅</span>Acabou de receber um diagnóstico e quer entender tudo</li>
+        <li><span class="icon">👨‍👩‍👧</span>Tem um filho, cônjuge ou familiar com celíaca</li>
+        <li><span class="icon">🍽️</span>Quer adotar uma alimentação mais consciente e saudável</li>
+        <li><span class="icon">📚</span>É profissional de saúde e quer material acessível para indicar</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="section-label">Sobre este guia</div>
+      <h2>Ciência traduzida em <em>linguagem humana</em></h2>
+      <p class="section-intro" style="margin-top:16px">Este ebook foi construído a partir de 13 fontes científicas — incluindo protocolos do Ministério da Saúde, diretrizes da Sociedade Brasileira de Gastroenterologia e pesquisas internacionais — e traduzido para uma linguagem acessível, sem jargões, sem alarmismo.</p>
+      <div style="margin-top:28px; display:flex; flex-direction:column; gap:12px">
+        <div style="display:flex; gap:12px; align-items:center">
+          <div style="width:40px;height:40px;background:var(--verde-palido);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">🔬</div>
+          <div><strong style="color:var(--escuro);font-size:0.9rem">Base científica sólida</strong><br><span style="font-size:0.82rem;color:var(--cinza);font-weight:300">13 fontes validadas e protocolos clínicos oficiais</span></div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center">
+          <div style="width:40px;height:40px;background:var(--verde-palido);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">💬</div>
+          <div><strong style="color:var(--escuro);font-size:0.9rem">Linguagem acessível</strong><br><span style="font-size:0.82rem;color:var(--cinza);font-weight:300">Sem jargão médico — qualquer pessoa entende</span></div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center">
+          <div style="width:40px;height:40px;background:var(--verde-palido);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">⚡</div>
+          <div><strong style="color:var(--escuro);font-size:0.9rem">Aplicação imediata</strong><br><span style="font-size:0.82rem;color:var(--cinza);font-weight:300">Receitas, cardápios e listas prontas para usar</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depo-section">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="reveal">
+      <div class="section-label">Resultados reais</div>
+      <h2>O que dizem quem leu</h2>
+    </div>
+    <div class="depo-inner">
+      <div class="depo-card reveal">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Passei anos indo de médico em médico com cansaço e dor de cabeça sem diagnóstico. Li o guia e me reconheci em cada página. Hoje, três meses sem glúten, sou uma pessoa diferente."</p>
+        <div class="depo-author">Carla M. <span>— São Paulo, SP</span></div>
+      </div>
+      <div class="depo-card reveal">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Minha filha de 8 anos foi diagnosticada com celíaca. Este guia me deu segurança para entender a doença e adaptar a alimentação dela sem ela sentir que está sendo privada de nada."</p>
+        <div class="depo-author">Fernanda R. <span>— Belo Horizonte, MG</span></div>
+      </div>
+      <div class="depo-card reveal">
+        <div class="depo-stars">★★★★★</div>
+        <p class="depo-text">"Sou nutricionista e recomendo este material para meus pacientes. A linguagem é acessível sem perder o rigor científico. As tabelas de substituição são especialmente úteis."</p>
+        <div class="depo-author">Dra. Ana Paula S. <span>— Curitiba, PR</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="oferta-section" id="oferta">
+  <div class="oferta-inner">
+    <div class="reveal">
+      <div class="section-label">Oferta de Lançamento</div>
+      <h2>Invista na sua saúde <em>hoje</em></h2>
+    </div>
+    <div class="oferta-box reveal">
+      <div class="oferta-titulo">Projeto Glúten Free — Guia Completo</div>
+      <div class="oferta-preco-de">De R$ 67,00</div>
+      <div class="oferta-preco"><sup>R$</sup>37<sup>,00</sup></div>
+      <div class="oferta-parcelas">Pagamento único • Acesso imediato e vitalício</div>
+      <ul class="oferta-inclusos">
+        <li>Ebook completo em PDF — 32 páginas</li>
+        <li>10 capítulos com base científica</li>
+        <li>6 infográficos ilustrativos</li>
+        <li>4 receitas práticas detalhadas</li>
+        <li>Cardápio semanal completo</li>
+        <li>Tabelas de substituição e leitura de rótulos</li>
+        <li>Acesso imediato após a compra</li>
+      </ul>
+      <a href="https://pay.kiwify.com.br/SEU-LINK-AQUI" class="btn-comprar">
+        🌾 Quero o Guia Agora — R$ 37,00
+      </a>
+      <div class="garantia">Compra 100% segura • Processado pela Kiwify</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div style="max-width:760px;margin:0 auto">
+    <div class="reveal">
+      <div class="section-label">Dúvidas Frequentes</div>
+      <h2>Perguntas e <em>Respostas</em></h2>
+    </div>
+    <div class="faq-inner">
+      <div class="faq-item reveal">
+        <div class="faq-q">Este ebook substitui uma consulta médica?</div>
+        <div class="faq-a">Não. O ebook tem caráter educativo e informativo. Ele vai te ajudar a entender a condição, saber quais exames pedir e como se preparar para a consulta — mas não substitui o acompanhamento de um gastroenterologista e nutricionista.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Posso ler mesmo sem ter diagnóstico de celíaca?</div>
+        <div class="faq-a">Absolutamente. O guia foi escrito para todos os perfis: quem já tem diagnóstico, quem suspeita, familiares de celíacos e quem simplesmente quer entender melhor o tema. O conteúdo é relevante para qualquer pessoa.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Como recebo o ebook após a compra?</div>
+        <div class="faq-a">Imediatamente após a confirmação do pagamento, você recebe um email com o link para download do PDF. O acesso é vitalício — você pode baixar e guardar para sempre.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Posso compartilhar o ebook com minha família?</div>
+        <div class="faq-a">O ebook é de uso pessoal. Se quiser que outros familiares tenham acesso completo, o ideal é adquirir uma cópia para cada um — o investimento é pequeno e o impacto na saúde é grande.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">As receitas são difíceis de preparar?</div>
+        <div class="faq-a">Não! As 4 receitas foram selecionadas justamente pela praticidade — pão de queijo, tapioca, bolo de fubá e farofa de mandioca. Ingredientes fáceis de encontrar e preparos simples, adequados para qualquer nível de cozinheiro.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong>Projeto Glúten Free</strong> • 2026 • Todos os direitos reservados<br>
+    Este material tem caráter educativo e informativo. Não substitui consulta médica ou nutricional.<br>
+    Dúvidas? Entre em contato pelo email do produto na Kiwify.
+  </p>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="sticky-cta" id="stickyCta">
+  <p>🌾 <strong>Projeto Glúten Free</strong> — por apenas R$ 37,00</p>
+  <a href="#oferta">Quero Agora →</a>
+</div>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.parentElement.classList.toggle('open');
+    });
+  });
+
+  // Sticky CTA
+  const sticky = document.getElementById('stickyCta');
+  window.addEventListener('scroll', () => {
+    sticky.classList.toggle('visible', window.scrollY > 600);
+  });
+</script>
+</body>
+</html>
